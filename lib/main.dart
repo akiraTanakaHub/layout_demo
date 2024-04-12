@@ -77,12 +77,7 @@ class TitleSection extends StatelessWidget {
               ],
             ),
           ),
-          Icon(
-            Icons.star,
-            color: Colors.red[500],
-          ),
-          const SizedBox(width: 3),
-          const Text('41'),
+          const FavoriteWidget(),
         ],
       ),
     );
@@ -179,6 +174,56 @@ class ImageSection extends StatelessWidget {
       width: 600,
       height: 240,
       fit: BoxFit.cover,
+    );
+  }
+}
+
+class FavoriteWidget extends StatefulWidget {
+  const FavoriteWidget({super.key});
+
+  @override
+  State<FavoriteWidget> createState() => _FavoriteWidgetState();
+}
+
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+
+  bool _isFavorited = true;
+  int _favoriteCount = 41;
+
+  void _toggleFavorite() {
+   setState(() {
+     if(_isFavorited) {
+       _favoriteCount -= 1;
+     } else {
+       _favoriteCount += 1;
+     }
+     _isFavorited = !_isFavorited;
+   });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(0),
+          child: IconButton(
+            padding: const EdgeInsets.all(0),
+            alignment: Alignment.center,
+            icon: (_isFavorited ? const Icon(Icons.star) : const Icon(Icons.star_border)),
+            color: Colors.red[500],
+            onPressed: _toggleFavorite,
+          ),
+        ),
+        SizedBox(
+          width: 20,
+          child: SizedBox(
+            child: Text('$_favoriteCount'),
+          ),
+        ),
+      ],
     );
   }
 }
